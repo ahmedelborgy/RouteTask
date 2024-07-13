@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import Chart from 'chart.js/auto';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -16,30 +17,103 @@ export class TableComponent implements OnInit {
   filteredCustomers: any[] = [];
   filterName: string = '';
   filterAmount: number | null = null;
+  nameChart:string='';
+  boolChart=true;
+  count=0;
   chart: any = null;
-page:number=2;
-limit:number=2;
+  length=20;
+  pageSize=5;
+  pageIndex=0;
+  pageNumber=1;
+  pageSizeOptions=[5,10,20,50,80,100];
+  pageEvent:PageEvent|any;
+  amounts:any[]=[];
+  dates:any[]=[];
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.getAllCustomers();
-    this.getAllTransactions();
-    this.getCharts([], []);
+    // this.getAllCustomers();
+    // this.getAllTransactions();
+    this.getAllCustomers2();
+    this.getCharts(this.amounts, this.dates);
+
 
   }
 
+
+
+
+
+
+
+
+
+
+// =====
+getAllCustomers2(): void {
+  let params={
+    pageSize:this.pageSize,
+    pageNumber:this.pageNumber,
+  }
+  console.log(this.pageNumber )
+console.log(params.pageNumber);
+
+
+
+  this.dataService.getAllData(this.pageIndex + 1, this.pageSize).subscribe({
+    next: res => {
+      console.log(res);
+      this.customers = res.customers.slice(0,this.pageSize);
+      this.transactions = res.transactions;
+
+      this.filteredCustomers = this.customers; // Initialize filteredCustomers with all customers initially
+   console.log(this.customers);
+   
+    },
+    error: err => {
+      console.log(err);
+    }
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// =====
+/*
   getAllCustomers(): void {
-    this.dataService.getAllCustomers(1,3).subscribe({
+    let params={
+      pageSize:this.pageSize,
+      pageNumber:this.pageNumber,
+    }
+    console.log(this.pageNumber )
+console.log(params.pageNumber);
+
+
+
+    this.dataService.getAllCustomers(this.pageIndex + 1, this.pageSize).subscribe({
       next: res => {
         this.customers = res;
         this.filteredCustomers = this.customers; // Initialize filteredCustomers with all customers initially
+     console.log(this.customers);
+     
       },
       error: err => {
         console.log(err);
       }
     });
   }
+*/
 
+/*
   getAllTransactions(): void {
     this.dataService.getAllTransactions().subscribe({
       next: res => {
@@ -51,6 +125,8 @@ limit:number=2;
       }
     });
   }
+
+    */
 
   getFilteredCustomerTransactions(customerId: number): any[] {
     
@@ -65,22 +141,7 @@ limit:number=2;
   }
 
 
-  // getFilteredCustomerTransactions(customerId: number): any[] {
-  //   if (!this.transactions || this.transactions.length === 0) {
-  //     // console.log('No transactions loaded.');
-  //     return [];
-  //   }
   
-  //   let transactions = this.transactions.filter(transaction => transaction.customer_id == customerId);
-  //   // console.log(`Transactions for customer ${customerId}:`, transactions); // Debug log
-  
-  //   if (this.filterAmount !== null) {
-  //     transactions = transactions.filter(transaction => transaction.amount === this.filterAmount);
-  //     // console.log(`Filtered transactions by amount ${this.filterAmount}:`, transactions); // Debug log
-  //   }
-  
-  //   return transactions;
-  // }
   
   applyFilters(): void {
     this.filteredCustomers = this.customers.filter(customer =>
@@ -88,14 +149,23 @@ limit:number=2;
       (this.filterAmount === null || this.getFilteredCustomerTransactions(customer.id).length > 0)
     );
   }
-
-  displayChats(transactions: any[]): void {
-    let amounts = transactions.map(transaction => transaction.amount);
-    let dates = transactions.map(transaction => transaction.date);
-    this.getCharts(amounts, dates);
+ 
+  displayChats(transactions: any[],name:string): void {
+    console.log(name);
+    // this.count++;
+    // this.boolChart=true;
+    this.nameChart=name;
+    this.amounts = transactions.map(transaction => transaction.amount);
+    this.dates = transactions.map(transaction => transaction.date);
+    this.getCharts(this.amounts, this.dates);
   }
 
   getCharts(amounts: any[], dates: any[]): void {
+    console.log(amounts)
+    console.log(dates)
+
+    this.count++;
+
     if (this.chart) {
       this.chart.destroy(); // Destroy the existing chart instance
     }
@@ -121,4 +191,29 @@ limit:number=2;
       }
     });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+handlePageEvent(e: PageEvent): void {
+  this.pageIndex = e.pageIndex;
+  this.pageSize = e.pageSize;
+  // this.getAllCustomers();
 }
+}
+
+
+
+
+

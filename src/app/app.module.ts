@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import Chart from 'chart.js/auto';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

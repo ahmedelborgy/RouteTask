@@ -1,116 +1,38 @@
-  
-  <!--  
-  
-  <p>table works!</p>
 
-<br><br><br>
 
-<div class="w-75 m-auto d-flex justify-content-between">
-  <input type="text" class="form-control mb-3 w-25" placeholder="Filter by name"
-   [(ngModel)]="filterName" (input)="applyFilters()">
- 
- 
-  <input type="number" class="form-control mb-3 w-25" placeholder="Filter by transaction amount" [(ngModel)]="filterAmount" (input)="applyFilters()">
-</div>
+<section class="container  ">
+<section class="titel w-75 m-auto  my-4">
+<h2 class="text-center text-white bg-dark ">Route Task</h2>
+<h2 class="text-center text-white bg-dark w-50 m-auto ">Customers Table</h2>
+
+</section>
 
 
 
-
-
-
-
-
-<table class="table table-dark table-striped w-75 m-auto">
-  <thead>
-    <tr>
-      <th>Customer ID</th>
-      <th>Name</th>
-    
-      <th>Transactions</th>
-    </tr>
-  </thead>
-  <tbody *ngIf="filteredCustomers.length>=0">
-    <tr *ngFor="let customer of  filteredCustomers" >
-      <td>{{ customer.id }}</td>
-      <td>{{ customer.name }}</td>
-      <td>
-        <ul>
-
-<ng-container *ngFor="let transaction of getFilteredCustomerTransactions(customer.id)">
- 
-  <li >
-    {{ transaction.date }} - ${{ transaction.amount }}
-  </li>
-
-</ng-container>
-<button (click)="displayChats(getFilteredCustomerTransactions(customer.id))">charts</button>
-
-
-
-
-
-        </ul>
-      </td>
-    </tr>
-    
-  </tbody>
-
-  <section *ngIf="filteredCustomers.length==0" class="w-75 m-auto">
-    <img src=".../../../../assets/no-data.avif" alt="">
-  </section>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-  <section *ngIf="filteredCustomers.length>=0" class="w-75 m-auto py-3">
-    <div class="w-75 m-auto">
-      <canvas class="" id="canvas">
-        {{chart}}</canvas>
-    </div> 
-  </section>
-
-
-
--->
-
-<!-- ================================ -->
-
-
-
-
-
-
-
-
-
-
-<!-- =============================================== -->
-
-
-  <p>table works!</p>
-
-
-<section class="container-fluid ">
-<section class="row justify-content-between">
-<div class="col-8">
+<section class="row justify-content-between border border-2 border-dark py-3">
+<div class="col-lg-8 ">
   <section class="is-table">
 
  
   
-    <div class="w-75 m-auto d-flex justify-content-between">
-      <input type="text" class="form-control mb-3 w-25" placeholder="Filter by name"
-       [(ngModel)]="filterName" (input)="applyFilters()">
+    <div class="w-75 m-auto d-flex justify-content-between ">
      
+
+      <div class="w-50">
+
+      
      
-      <input type="number" class="form-control mb-3 w-25" placeholder="Filter by transaction amount" [(ngModel)]="filterAmount" (input)="applyFilters()">
+      <input type="text" class="form-control mb-3 w-75 " placeholder="Filter by name"
+       [(ngModel)]="filterName" (input)="applyFilters()" >
+     
+      </div>
+
+      <div class="w-50">
+
+      
+      <input type="number" class="form-control mb-3 w-75" 
+      placeholder="Filter by amount" [(ngModel)]="filterAmount" (input)="applyFilters()">
+    </div>
     </div>
     
     
@@ -120,13 +42,12 @@
     
     
     
-    <table class="table table-dark table-striped ">
+    <table class="table table-dark table-striped  ">
       <thead>
         <tr>
-          <th>Customer ID</th>
+          <th class=" w-25">Customer ID</th>
           <th>Name</th>
-        
-          <th>Transactions</th>
+         <th>Transactions</th>
         </tr>
       </thead>
       <tbody *ngIf="filteredCustomers.length>=0">
@@ -143,7 +64,7 @@
       </li>
     
     </ng-container>
-    <button (click)="displayChats(getFilteredCustomerTransactions(customer.id))">charts</button>
+    <button (click)="displayChats(getFilteredCustomerTransactions(customer.id),customer.name )">charts</button>
     
     
     
@@ -155,26 +76,54 @@
         
       </tbody>
     
+
+
+
+
+    
+
+
+
+
       <section *ngIf="filteredCustomers.length==0" class="w-75 m-auto">
         <img src=".../../../../assets/no-data.avif" alt="">
       </section>
     </table>
     
     
-    
-    
+
+    <!-- <div  *ngIf="filteredCustomers.length!=0" class="my-3 p-2  w-100">
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)" aria-label="Select page"></mat-paginator>
+    </div> -->
+
   </section>
 </div>
-<div class="col-4  d-flex justify-content-center align-items-center">
-  <section *ngIf="filteredCustomers.length>=0" class=" m-auto py-3">
-    <div class=" m-auto">
-      <canvas class="" id="canvas">
-        {{chart}}</canvas>
-    </div> 
+
+
+<div *ngIf="count!=0" class=" col-lg-4  d-flex justify-content-center align-items-center">
+ 
+  <section class="d-flex flex-column">
+    <p class="bg-info w-100 p-2">You Should Select a customer to show his chart</p> 
+  <h5>{{nameChart}}</h5>
+
+ 
+    <section *ngIf="filteredCustomers.length>=0" class=" m-auto py-3">
+      <div class=" m-auto bg-dark">
+        <canvas class="" id="canvas">
+          {{chart}}</canvas>
+      </div> 
+    </section>
+  
   </section>
 
 
 </div>
+
+
+
+
+
+
 
 
 </section>

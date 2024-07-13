@@ -37,10 +37,10 @@ export class DataService {
   // private apiUrl = 'http://localhost:5000/transangctions';
 
   constructor(private http: HttpClient) { }
-
+/*
   getAllCustomers(p :any,l:any): Observable<any> {
-    // return this.http.get(`http://localhost:5000/customers`);
-    // http://localhost:5000/customers?_page=2&_limit=2
+
+console.log(p);
 
     return this.http.get(`http://localhost:5000/customers?_page=${p}&_limit=${l}`);
 
@@ -49,6 +49,15 @@ export class DataService {
   
   getAllTransactions(): Observable<any> {
     return this.http.get(`http://localhost:5000/transactions`);
+
+
+  }
+
+  */
+  getAllData(page:any,limit:any): Observable<any> {
+    // return this.http.get(`http://localhost:5000/transactions`);
+    return this.http.get(`https://ahmedelborgy.github.io/api/db.json?_page=${page}&_limit=${limit}`);
+
 
   }
  
