@@ -32,8 +32,7 @@ export class TableComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    // this.getAllCustomers();
-    // this.getAllTransactions();
+    
     this.getAllCustomers2();
     this.getCharts(this.amounts, this.dates);
 
