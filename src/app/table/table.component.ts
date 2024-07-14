@@ -210,6 +210,7 @@ handlePageEvent(e: PageEvent): void {
   this.pageIndex = e.pageIndex;
   this.pageSize = e.pageSize;
   // this.getAllCustomers();
+  this.getAllCustomers2();
 }
 }
 
